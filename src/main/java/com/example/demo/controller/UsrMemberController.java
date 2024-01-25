@@ -50,7 +50,6 @@ public class UsrMemberController {
 			}
 		}
 		
-		
 		return data; // json으로 보내야함. -> 데이터는 json으로 오가니까.
 		
 	}
