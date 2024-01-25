@@ -7,8 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.service.UsrMemberService;
+import com.example.demo.vo.Member;
+
 @Controller
 public class UsrMemberController {
+	
+	private UsrMemberService usrMemberService;
+	
+	UsrMemberController(UsrMemberService usrMemberService){
+		this.usrMemberService =usrMemberService;
+	}
+	
 	Map<String, Object> data = new HashMap<>();
 	//회원가입
 	@RequestMapping("/usr/member/join")
@@ -28,7 +38,16 @@ public class UsrMemberController {
 		}else if(pwcheck == null) {
 			data.put("F-6", "비밀번호 확인이 없습니다. 회원가입을 할 수 없습니다.");
 		}else {
-			data.put("result", "회원가입되었습니다.");
+			// 위에서 null인곳이 없음을 확인하고 나면
+			// 비밀번호와 비밀번호 확인 일치확인
+			if(!pw.equals(pwcheck)) {
+				data.put("F-7", "비밀번호가 일치하지 않습니다. 회원가입을 할 수 없습니다.");
+			}else {
+				//비밀번호 일치 시
+				usrMemberService.doJoin(companyNm, tel, email, address, pw);
+				
+				data.put("result", "회원가입되었습니다.");
+			}
 		}
 		
 		
@@ -37,7 +56,7 @@ public class UsrMemberController {
 	}
 	
 	//로그인
-	@RequestMapping("/usr/member/loin")
+	@RequestMapping("/usr/member/login")
 	@ResponseBody
 	public Map<String, Object> doLogin(String email, String pw) { //이메일(email) , 비밀번호(pw)
 		
@@ -48,14 +67,16 @@ public class UsrMemberController {
 		}else { // 여기는 키들이 null이 아닐 때
 			
 			// 여기서는 DB 가서 있는지 확인하고 데려와야지
+			Member member = usrMemberService.getMember(email, pw);
 			
+			if(member==null) {
+				data.put("F-3", "찾을수 없는 회원입니다. 회원가입해주세요.");
+			}else {
+				// 여기서 세션에 넣어야 그래야 로그인 안되면 서비스 이용 불가하게 가능하지.
+				data.put("result", "로그인되었습니다.");				
+			}
 			
-			data.put("result", "로그인되었습니다.");
 		}
-		
-		System.out.println("emial : "+email);
-		System.out.println("pw : "+pw);
-		
 		
 		return data ; // json으로 보내야함. -> 데이터는 json으로 오가니까.
 		
