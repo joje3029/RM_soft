@@ -6,6 +6,8 @@ import java.time.temporal.ChronoUnit;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.UsrStorageDao;
+import com.example.demo.vo.Member;
+import com.example.demo.vo.Storage;
 
 @Service
 public class UsrStorageService {
@@ -29,6 +31,15 @@ public class UsrStorageService {
 		
 		//Dao에 보내기
 		usrStorageDao.doServiceSub(useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum, loginedMemberId);
+	}
+
+	public Storage doExtenstionDate(int loginedMemberId, String extenstionDate) {
+		// 1. loginedMemberId 가지고 Db가서 Service 테이블의 기간 update
+		usrStorageDao.doExtenstionDate(loginedMemberId, extenstionDate);
+		
+		// 2. 그후 select로 update한 내용을 가져옴. -> 그래야 어디까지 연장되었는지 나오지. 
+		return usrStorageDao.getLastUpdate(loginedMemberId);
+		
 	}
 
 	

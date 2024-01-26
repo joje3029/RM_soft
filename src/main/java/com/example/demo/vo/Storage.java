@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Storage {
+	private int Service_Pk;
 	private int company_ID;
-	private String company_name;
-	private String tel;
-	private String email;
-	private String address;
-	private String pw;
+	private int member_num;
+	private int service_type;
+	private String start_datetime;
+	private String end_datetime;
 }
