@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Storage {
+public class RmService {
 	private int Service_Pk;
 	private int company_ID;
 	private int member_num;

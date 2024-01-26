@@ -7,27 +7,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.service.UsrStorageService;
+import com.example.demo.service.UsrRmServiceService;
 import com.example.demo.vo.Member;
-import com.example.demo.vo.Storage;
+import com.example.demo.vo.RmService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class UsrStorageController {
+public class UsrRmServiceController {
 	
-	private UsrStorageService usrStorageService;
+	private UsrRmServiceService usrRmServiceService;
 	private HttpSession session;
 	
-	UsrStorageController(UsrStorageService usrStorageService, HttpSession session){
-		this.usrStorageService =usrStorageService;
+	UsrRmServiceController(UsrRmServiceService usrRmServiceService, HttpSession session){
+		this.usrRmServiceService =usrRmServiceService;
 		this.session =session;
 	}
 	
 	Map<String, Object> data = new HashMap<>();
 	
 	//서비스 구독신청
-	@RequestMapping("/usr/Storage/applySub")
+	@RequestMapping("/usr/RmService/applySub")
 	@ResponseBody
 	public Map<String, Object> doApplySub(String useMemberNum, String serviceType, String serviceDate) {
 		// 필수정보 : 사용인원, 서비스형태(Basic=1, Standard=2,Premium=3),구독기간
@@ -67,7 +67,7 @@ public class UsrStorageController {
 				data.put("F-4", "알맞은 서비스 종류가 아닙니다. Basic, Standard, Premium 중 알 맞은 것으로 넣어주세요.");
 			}else {
 				//2. 있으면 서비스에 테이블에 넣기 -> 사용인원, 서비스형태(번호로 서비스에서변형), 서비스 신청일자(지금 날짜), 서비스 종료일자 -> 기간기간으로 자동 +계산, 사용가능 스토리지
-				usrStorageService.doServiceSub(useMemberNum, serviceType, serviceDate, storageTypeNum, (int)session.getAttribute("loginedMemberId"));
+				usrRmServiceService.doServiceSub(useMemberNum, serviceType, serviceDate, storageTypeNum, (int)session.getAttribute("loginedMemberId"));
 				
 				data.put("result", "구독신청되었습니다.");
 			}
@@ -97,7 +97,7 @@ public class UsrStorageController {
 //	}
 	
 	//서비스 기간연장 요청
-		@RequestMapping("/usr/Storage/extenstionDate")
+		@RequestMapping("/usr/RmService/extenstionDate")
 		@ResponseBody
 		public Map<String, Object> doExtenstionDate(String extenstionDate) {
 			// 여기도 우선 로그인이 되어있어야함 -> 그래야 그 정보로 가져오지
@@ -113,11 +113,11 @@ public class UsrStorageController {
 			}else {
 				// 기간이 입력됨. -> 이걸 들고 Db 가야지 -> 서비스에서 계산해서 Db에 업데이트하게 하면되것다.
 				
-				 Storage storage  = usrStorageService.doExtenstionDate((int)session.getAttribute("loginedMemberId") ,extenstionDate);
+				RmService rmService  = usrRmServiceService.doExtenstionDate((int)session.getAttribute("loginedMemberId") ,extenstionDate);
 				
-				 System.out.println("storage : "+storage.getEnd_datetime());
+				 System.out.println("RmService : "+rmService.getEnd_datetime());
 				 
-				data.put("result", storage.getEnd_datetime()+"까지 연장되었습니다.");
+				data.put("result", rmService.getEnd_datetime()+"까지 연장되었습니다.");
 			}
 			
 			// 1. 받아야하는 키. 연장얼마나 할껀지 

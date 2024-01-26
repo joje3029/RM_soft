@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.demo.vo.Storage;
+import com.example.demo.vo.RmService;
 
 @Mapper
-public interface UsrStorageDao {
+public interface UsrRmServiceDao {
 	
 	@Insert("""
 			INSERT INTO `Service`
@@ -37,7 +37,7 @@ public interface UsrStorageDao {
 				FROM Service 
 				WHERE company_ID = #{loginedMemberId};
 			""")
-	public Storage getLastUpdate(int loginedMemberId);
+	public RmService getLastUpdate(int loginedMemberId);
 	
 	
 	
