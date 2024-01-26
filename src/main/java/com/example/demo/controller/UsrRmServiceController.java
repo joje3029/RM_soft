@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.UsrRmServiceService;
-import com.example.demo.vo.Member;
+import com.example.demo.vo.Dashbord;
 import com.example.demo.vo.RmService;
 
 import jakarta.servlet.http.HttpSession;
@@ -75,26 +75,30 @@ public class UsrRmServiceController {
 		}
 		
 		return data; // json으로 보내야함. -> 데이터는 json으로 오가니까.
-		
 	}
 	
-//	//서비스 사용현황(대시보드)
-//	@RequestMapping("/usr/Storage/applySub")
-//	@ResponseBody
-//	public Map<String, Object> showqService() {
-//		// 여기도 우선 로그인이 되어있어야함 -> 그래야 그 정보로 가져오지
-//		if(session.getAttribute("loginedMemberId")==null) {
-//			data.put("F-5", "로그인 후 이용해주세요.");
-//			return data;
-//		}
-//		
-//		//1. DB 가서 일단 지금꺼 가져오기
-//		//2. 1. 성공하면 스토리지를 사용했다는 전제하에 얼마나 남았는지가 서비스에서 계산되서 나와야함.
-//		
-//		
-//		return data;
-//	
-//	}
+	//서비스 사용현황(대시보드)
+		@RequestMapping("/usr/RmService/showDashbord")
+		@ResponseBody
+		public Map<String, Object> showDashbord() {
+			// 여기도 우선 로그인이 되어있어야함 -> 그래야 그 정보로 가져오지
+			if(session.getAttribute("loginedMemberId")==null) {
+				data.put("F-5", "로그인 후 이용해주세요.");
+				return data;
+			}
+			
+			//1. DB 가서 일단 지금꺼 가져오기
+			Dashbord dashbord = usrRmServiceService.getDashbord((int)session.getAttribute("loginedMemberId"));
+			
+//			//2. 1. 성공하면 스토리지를 사용했다는 전제하에 얼마나 남았는지가 서비스에서 계산되서 나와야함.
+			
+			data.put("result", "대시보드 오케?");
+			
+			return data;
+			
+		}
+	
+	
 	
 	//서비스 기간연장 요청
 		@RequestMapping("/usr/RmService/extenstionDate")

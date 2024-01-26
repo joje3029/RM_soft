@@ -39,6 +39,12 @@ public interface UsrRmServiceDao {
 			""")
 	public RmService getLastUpdate(int loginedMemberId);
 	
+	@Select("""
+			SELECT * FROM Service
+				WHERE company_ID = #{loginedMemberId}
+			""")
+	public RmService getServiceinfo(int loginedMemberId);
+	
 	
 	
 }

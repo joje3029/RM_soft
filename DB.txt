@@ -1,0 +1,56 @@
+DROP DATABASE IF EXISTS RM_soft;
+CREATE DATABASE RM_soft;
+USE RM_soft;
+
+
+CREATE TABLE `Member` (
+	`company_ID`	INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '회원PK',
+	`company_name`	VARCHAR(100)	NOT NULL COMMENT '회사명',
+	`tel`	INT	NOT NULL	COMMENT '전화번호',
+	`email`	VARCHAR(50)	NOT NULL	COMMENT '이메일',
+	`address` VARCHAR(100)	NOT NULL	COMMENT '주소',
+	`pw`	VARCHAR(100)	NOT NULL	COMMENT '비밀번호'
+);
+
+CREATE TABLE `Service` (
+	`Service_Pk`	INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT'서비스PK',
+	`company_ID`	INT	NOT NULL	COMMENT '회사PK',			
+	`member_num`	INT	NOT NULL	COMMENT '서비스 사용인원',
+	`service_type`	INT	NOT NULL	COMMENT '서비스 형태(Basic =1, Standard =2, Premium=3)',
+	`start_datetime` DATETIME	NOT NULL	COMMENT '서비스 신청일자',
+	`end_datetime`	DATETIME	NOT NULL	COMMENT '서비스 종료일자'
+	
+);
+
+CREATE TABLE `Storge` (
+	`storge_PK`	INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '스토리지PK',
+	`company_ID`	INT	NOT NULL	COMMENT '회사PK',
+	`file_nm`	VARCHAR(200)	NOT NULL	COMMENT '파일명',
+	`file_save_nm`	VARCHAR(200)	NOT NULL	COMMENT '파일저장명',
+	`file_ext`	VARCHAR(10)	NOT NULL	COMMENT '파일 확장자',
+	`file_path`	VARCHAR(500)	NOT NULL	COMMENT '파일 경로',
+	`file_size`	VARCHAR(20)	NOT NULL	COMMENT '파일크기',
+	`first_reg_dt`	DATETIME	NOT NULL	COMMENT '최초등록일자',
+	`update_reg_dt` DATETIME	NOT NULL	COMMENT '수정일자'
+);
+
+SELECT * FROM Service
+
+
+SELECT * FROM `Member`
+
+SELECT * FROM Storge
+
+
+#Storage 데이터 가라로 넣고 확인해보기
+INSERT INTO Storge
+ SET company_ID =1
+	, file_nm="test"
+	, file_save_nm ="test"
+	, file_ext = "png"
+	, file_path ="C:\Users\admin\git\RM_soft"
+	, file_size = "10KB"
+	, first_reg_dt = NOW()
+	, update_reg_dt = NOW()
+
+
