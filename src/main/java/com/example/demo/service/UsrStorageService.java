@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.UsrStorageDao;
@@ -12,6 +15,25 @@ public class UsrStorageService {
 	UsrStorageService(UsrStorageDao usrStorageDao){
 		this.usrStorageDao = usrStorageDao;
 	}
+
+	public void doServiceSub(String useMemberNum, String serviceType, String serviceDate, int storageTypeNum) {
+		
+		int serviceMonth =Integer.parseInt(serviceDate);
+		
+		// 사용기간: 현재 날짜와 시간 + 개월 수()
+		LocalDateTime ServiceStartTime = LocalDateTime.now(); // 현재 날짜와 시간
+		
+		// 종료일자 : currentTime + serviceMonth
+		LocalDateTime serviceEndTime = ServiceStartTime.plus(serviceMonth, ChronoUnit.MONTHS);
+		
+		System.out.println("서비스");
+		System.out.printf("useMemberNum : %s ,ServiceStartTime : %s, serviceEndTime : %s , storageTypeNum : %d ", useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum );
+		
+		//Dao에 보내기
+		usrStorageDao.doServiceSub(useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum);
+	}
+
+	
 	
 
 	

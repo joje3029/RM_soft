@@ -17,7 +17,7 @@ public interface UsrMemberDao {
 					, address =#{address}
 					, pw=#{pw}
 			""")
-	void doJoin(String companyNm, String tel, String email, String address, String pw);
+	public void doJoin(String companyNm, String tel, String email, String address, String pw);
 	
 	@Select("""
 			SELECT * 
@@ -25,6 +25,6 @@ public interface UsrMemberDao {
 				WHERE email = #{email}
 				AND pw =#{pw}
 			""")
-	Member getMember(String email, String pw);
+	public  Member getMember(String email, String pw);
 	
 }
