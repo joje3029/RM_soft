@@ -11,12 +11,13 @@ public interface UsrStorageDao {
 	@Insert("""
 			INSERT INTO `Service`
 				SET member_num = #{useMemberNum}
+					, company_ID = #{loginedMemberId}
 					, service_type = #{storageTypeNum}
 					, start_datetime =#{serviceStartTime}
 					, end_datetime =#{serviceEndTime}
 			""")
 	public void doServiceSub(String useMemberNum,  LocalDateTime serviceStartTime,
-			LocalDateTime serviceEndTime, int storageTypeNum);
+			LocalDateTime serviceEndTime, int storageTypeNum, int loginedMemberId);
 	
 	
 	

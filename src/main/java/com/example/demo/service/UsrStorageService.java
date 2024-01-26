@@ -16,7 +16,7 @@ public class UsrStorageService {
 		this.usrStorageDao = usrStorageDao;
 	}
 
-	public void doServiceSub(String useMemberNum, String serviceType, String serviceDate, int storageTypeNum) {
+	public void doServiceSub(String useMemberNum, String serviceType, String serviceDate, int storageTypeNum, int loginedMemberId) {
 		
 		int serviceMonth =Integer.parseInt(serviceDate);
 		
@@ -28,7 +28,7 @@ public class UsrStorageService {
 		
 		
 		//Dao에 보내기
-		usrStorageDao.doServiceSub(useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum);
+		usrStorageDao.doServiceSub(useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum, loginedMemberId);
 	}
 
 	
