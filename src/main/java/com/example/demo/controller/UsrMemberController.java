@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.UsrMemberService;
 import com.example.demo.vo.Member;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UsrMemberController {
 	
 	private UsrMemberService usrMemberService;
+	private HttpSession session;
 	
-	UsrMemberController(UsrMemberService usrMemberService){
+	UsrMemberController(UsrMemberService usrMemberService, HttpSession session){
 		this.usrMemberService =usrMemberService;
+		this.session =session;
 	}
 	
 	Map<String, Object> data = new HashMap<>();
@@ -24,6 +28,8 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/join")
 	@ResponseBody
 	public Map<String, Object> doJoin(String companyNm, String tel, String email, String address, String pw, String pwcheck ) { //key로 들어올 내용 : 회사명(companyNm), 전화번호(tel), 이메일(email), 주소(address), 비밀번호(pw), 비밀번호 확인(pwcheck)
+		
+//		data.isEmpty();
 		
 		if(companyNm==null) {
 			data.put("F-1", "회사명이 없습니다. 회원가입을 할 수 없습니다.");
@@ -72,10 +78,24 @@ public class UsrMemberController {
 				data.put("F-3", "찾을수 없는 회원입니다. 회원가입해주세요.");
 			}else {
 				// 여기서 세션에 넣어야 그래야 로그인 안되면 서비스 이용 불가하게 가능하지.
+				session.setAttribute("loginedMemberId", member.getCompany_ID());
 				data.put("result", "로그인되었습니다.");				
 			}
 			
 		}
+		
+		return data ; // json으로 보내야함. -> 데이터는 json으로 오가니까.
+		
+	}
+	
+	//임으로 쓰려고 만든 로그아웃
+	@RequestMapping("/usr/member/logout")
+	@ResponseBody
+	public Map<String, Object> doLogOut() { //이메일(email) , 비밀번호(pw)
+		
+		session.removeAttribute("loginedMemberId");
+		
+		data.put("result", "로그아웃되었습니다.");				
 		
 		return data ; // json으로 보내야함. -> 데이터는 json으로 오가니까.
 		

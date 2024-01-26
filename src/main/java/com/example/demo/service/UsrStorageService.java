@@ -26,8 +26,6 @@ public class UsrStorageService {
 		// 종료일자 : currentTime + serviceMonth
 		LocalDateTime serviceEndTime = ServiceStartTime.plus(serviceMonth, ChronoUnit.MONTHS);
 		
-		System.out.println("서비스");
-		System.out.printf("useMemberNum : %s ,ServiceStartTime : %s, serviceEndTime : %s , storageTypeNum : %d ", useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum );
 		
 		//Dao에 보내기
 		usrStorageDao.doServiceSub(useMemberNum, ServiceStartTime, serviceEndTime, storageTypeNum);

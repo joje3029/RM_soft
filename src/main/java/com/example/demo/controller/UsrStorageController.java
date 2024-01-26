@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.UsrStorageService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UsrStorageController {
 	
 	private UsrStorageService usrStorageService;
+	private HttpSession session;
 	
-	UsrStorageController(UsrStorageService usrStorageService){
+	UsrStorageController(UsrStorageService usrStorageService, HttpSession session){
 		this.usrStorageService =usrStorageService;
+		this.session =session;
 	}
 	
 	Map<String, Object> data = new HashMap<>();
@@ -24,10 +28,15 @@ public class UsrStorageController {
 	@RequestMapping("/usr/Storage/applySub")
 	@ResponseBody
 	public Map<String, Object> doApplySub(String useMemberNum, String serviceType, String serviceDate) {
+		
 		// 필수정보 : 사용인원, 서비스형태(Basic=1, Standard=2,Premium=3),구독기간
 		// 부가정보 :  어느놈이 신청했나 => 로그인한 세션의 번호가 들어가면 되겠다.
 		
-		System.out.printf("useMemberNum : %s, serviceType : %s, serviceDate : %s ", useMemberNum, serviceType, serviceDate);
+		// 세션에 있는지 확인. 있으면 진행 없으면 로그인하고 오라고 해야함.
+		if(session.getAttribute("loginedMemberId")==null) {
+			data.put("F-5", "로그인 후 이용해주세요.");
+			return data;
+		}
 		
 		//1. 필수정보는 없으면 없다고 해야함
 		if(useMemberNum==null) {
@@ -52,7 +61,6 @@ public class UsrStorageController {
 				storageTypeNum=-1;
 			}
 			
-			System.out.println("storageTypeNum : "+storageTypeNum);
 			
 			if(storageTypeNum==-1) {
 				data.put("F-4", "알맞은 서비스 종류가 아닙니다. Basic, Standard, Premium 중 알 맞은 것으로 넣어주세요.");
