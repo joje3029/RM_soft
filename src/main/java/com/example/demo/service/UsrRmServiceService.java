@@ -55,20 +55,12 @@ public class UsrRmServiceService {
 		//2. 현재 로그인한 사람의 Storage 테이블에서 정보 다 가져오기 -> 파일 크기 다 더해서 서비스 종류마다 모수에서 빼기 / 파일 리스트 다 보여줄수 있고 / 다 더해서 얼마만큼 총합 보여줄수 있음
 		List<Storge> storages = usrStorageDao.getStorageinfo(loginedMemberId);
 		
-		// file_size들 숫자로 환산.
-		System.out.println("storage : "+storages);
-//		Storge storage = storages.get(0);
-//		String fileSize =storage.getFile_size();
-//		System.out.println("fileUnit : "+fileSize.substring(fileSize.length()-2, fileSize.length())); // 단위 확인
-//		System.out.println("fileStrNum : "+fileSize.substring(0,fileSize.length()-2)); // 단위 앞 숫자 str
-
 		// file_size합산
 		long sumFileSize = 0;
 		
 		for(Storge storage : storages) {
 			
-			System.out.println("storage : "+storage);
-			
+			// file_size들 숫자로 환산.
 			String fileSize =storage.getFile_size();
 			String fileUnit = fileSize.substring(fileSize.length()-2, fileSize.length()); // 단위 확인
 			String fileStrNum = fileSize.substring(0,fileSize.length()-2); // 단위 앞 숫자 str
@@ -102,6 +94,7 @@ public class UsrRmServiceService {
 		
 		
 		//3. Dashbord 객체 형태에 맞춰서 조립해서 return
+		
 		
 		return null;
 	}
