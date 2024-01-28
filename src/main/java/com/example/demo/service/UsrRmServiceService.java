@@ -64,10 +64,15 @@ public class UsrRmServiceService {
 
 		// file_size합산
 		long sumFileSize = 0;
+		
 		for(Storge storage : storages) {
+			
+			System.out.println("storage : "+storage);
+			
 			String fileSize =storage.getFile_size();
 			String fileUnit = fileSize.substring(fileSize.length()-2, fileSize.length()); // 단위 확인
 			String fileStrNum = fileSize.substring(0,fileSize.length()-2); // 단위 앞 숫자 str
+			
 			int fileNum=Integer.parseInt(fileStrNum); // 숫자 str -> int
 			
 			System.out.println("fileNum : "+fileNum);
