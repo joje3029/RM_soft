@@ -19,6 +19,6 @@ public class Dashbord {
 	private int Service_endDay ; // 사용신청 마감기간(D-day로 알려주기)  - Service
 	private int stroage_user;// 스토리지 사용량  - Service + Storage 계산해서 보여줘야함.
 	
-	// 메소드로 계산해서 때려야지
+	// 의존성 주입
 	
 }
