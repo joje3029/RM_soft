@@ -27,4 +27,11 @@ public interface UsrMemberDao {
 			""")
 	public  Member getMember(String email, String pw);
 	
+	@Select("""
+			SELECT * 
+				FROM `Member`
+				WHERE company_ID = #{loginedMemberId}
+			""")
+	public Member getMemberinfo(int loginedMemberId);
+	
 }
